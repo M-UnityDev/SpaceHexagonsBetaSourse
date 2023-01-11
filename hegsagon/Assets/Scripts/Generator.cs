@@ -77,8 +77,23 @@ public class Generator : MonoBehaviour
     IEnumerator spdspwn()
     {
         Vector2 pos = center + new Vector3(Random.Range(-15f, 15f), Random.Range(-15f, 15f));
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(15f);
         Instantiate(spdpref, pos, Quaternion.identity);
         StartCoroutine(spdspwn());
+    }
+    public void puse()
+    {
+        pause = !pause;
+        pan.SetActive(pause);
+        if (pause == false)
+        {
+            Time.timeScale = 1;
+            canv.GetComponent<AudioSource>().volume = 1f;
+        }
+        else
+        {
+            Time.timeScale = 0;
+            canv.GetComponent<AudioSource>().volume = 0.25f;
+        }
     }
 }

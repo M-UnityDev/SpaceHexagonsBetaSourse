@@ -31,4 +31,9 @@ public class Menu : MonoBehaviour
         gen.GetComponent<AudioSource>().PlayOneShot(aus);
         SceneManager.LoadScene("guide");
     }
+    public void lvlbtn()
+    {
+        gen.GetComponent<AudioSource>().PlayOneShot(aus);
+        SceneManager.LoadScene("levels");
+    }
 }

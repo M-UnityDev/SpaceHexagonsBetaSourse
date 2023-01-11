@@ -1,18 +1,16 @@
 using UnityEngine;
 using TMPro;
-
 using System.Collections;
 public class moonment : MonoBehaviour
 {
     public float speed = 300f;
-    public float movent = 0f;
+    private float movent = 0f;
     public new Collider2D collider;
-    public GameObject gamovr;
+    public TMP_Text cointxt;
     public GameObject exp;
     public GameObject gen;
-    public GameObject canv;
+    public movement earth;
     public AudioClip dead;
-    public AudioClip musgameovr;
     void Update()
     {
         movent = Input.GetAxisRaw("Horizontal");
@@ -24,9 +22,7 @@ public class moonment : MonoBehaviour
         if (collider.gameObject.tag == "Coin")
         {}
         else if (collider.gameObject.tag == "Speed")
-        {
-            StartCoroutine(sped());
-        }
+        {}
         else
         {StartCoroutine(boom());}
     }
@@ -34,18 +30,11 @@ public class moonment : MonoBehaviour
     {
         Instantiate(exp, gameObject.transform);
         speed = 0f;
-        canv.GetComponent<AudioSource>().Stop();
+        earth.coins = earth.coins - 10;
+        cointxt.text = earth.coins + " :Coins";
+        Debug.Log("-10");
         gen.GetComponent<AudioSource>().PlayOneShot(dead);
         yield return new WaitForSeconds(0.7f);
-        gamovr.SetActive(true);
-        gen.GetComponent<AudioSource>().PlayOneShot(musgameovr);
-        Time.timeScale = 0;
         Destroy(gameObject);
-    }
-    IEnumerator sped()
-    {
-        speed = 450f;
-        yield return new WaitForSeconds(30f);
-        speed = 300f;
     }
 }

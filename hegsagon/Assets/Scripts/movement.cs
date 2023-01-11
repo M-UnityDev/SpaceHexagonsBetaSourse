@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-
 using System.Collections;
 public class movement : MonoBehaviour
 {
@@ -16,11 +15,16 @@ public class movement : MonoBehaviour
     public AudioClip gameover;
     public AudioClip dead;
     public GameObject pan;
+    public GameObject sh;
+    public bool invis;
     void Update()
     {
         movent = Input.GetAxisRaw("Horizontal");
         transform.RotateAround(Vector3.zero, Vector3.forward, movent * speed * Time.deltaTime);
         transform.Rotate(new Vector3(0, 0, 45) * Time.deltaTime);
+        if (coins < 0)
+        {coins = 0;}
+        cointxt.text = coins + " :Coins";
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {
@@ -28,7 +32,7 @@ public class movement : MonoBehaviour
         {
             Destroy(collider.gameObject);
             coins += 1;
-            cointxt.text = coins + ":Coins";
+            cointxt.text = coins + " :Coins";
             Debug.Log("coin");
         }
         else if (collider.gameObject.tag == "Speed")
@@ -36,10 +40,10 @@ public class movement : MonoBehaviour
             Destroy(collider.gameObject);
             StartCoroutine(sped());
         }
+        else if (invis == true)
+        {Destroy(collider.gameObject);}
         else
-        {
-            StartCoroutine(boom());
-        }
+        {StartCoroutine(boom());}
     }
     IEnumerator boom()
     {
@@ -56,8 +60,11 @@ public class movement : MonoBehaviour
     }
     IEnumerator sped()
     {
-        speed = 450f;
+        Instantiate(sh, gameObject.transform);
+        invis = true;
+        Debug.Log("invic true");
         yield return new WaitForSeconds(30f);
-        speed = 300f;
+        invis = false;
+        Debug.Log("invic false");
     }
 }
